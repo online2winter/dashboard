@@ -1,0 +1,75 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+/* Tailwind Directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Base Styles */
+@layer base {
+html {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body {
+    @apply bg-gray-900 text-white;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1 {
+    @apply text-4xl font-bold;
+}
+
+h2 {
+    @apply text-3xl font-semibold;
+}
+
+h3 {
+    @apply text-2xl font-semibold;
+}
+}
+
+/* Custom Components */
+@layer components {
+.btn {
+    @apply px-4 py-2 rounded-lg font-medium transition-all duration-200;
+}
+
+.btn-primary {
+    @apply bg-indigo-600 hover:bg-indigo-700 text-white;
+}
+
+.btn-secondary {
+    @apply bg-gray-600 hover:bg-gray-700 text-white;
+}
+
+.card {
+    @apply bg-gray-800 rounded-xl p-6 shadow-lg;
+}
+
+.input {
+    @apply bg-gray-700 border-gray-600 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-transparent;
+}
+}
+
+/* Custom Utilities */
+@layer utilities {
+.text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-500;
+}
+
+.bg-gradient {
+    @apply bg-gradient-to-r from-indigo-500 to-purple-500;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+}

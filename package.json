@@ -1,0 +1,111 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@headlessui/react": "^1.7.18",
+    "@heroicons/react": "^2.1.1",
+    "@solana/wallet-adapter-base": "^0.9.23",
+    "@solana/wallet-adapter-react": "^0.15.35",
+    "@solana/wallet-adapter-react-ui": "^0.9.35",
+    "@solana/wallet-adapter-solflare": "^0.6.28",
+    "@solana/wallet-adapter-torus": "^0.11.28",
+    "@solana/wallet-adapter-wallets": "^0.19.32",
+    "@solana/web3.js": "^1.98.0",
+    "axios": "^1.7.9",
+    "browser-process": "^0.0.1",
+    "chart.js": "^4.4.7",
+    "cra-template": "1.2.0",
+    "prop-types": "^15.8.1",
+    "qrcode.react": "^3.1.0",
+    "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
+    "react-dom": "^18.2.0",
+    "react-error-boundary": "^5.0.0",
+    "react-hot-toast": "^2.5.1",
+    "react-qr-code": "^2.0.12",
+    "util": "^0.12.5",
+    "vm-browserify": "^1.1.2",
+    "web-vitals": "^4.2.4"
+  },
+  "browser": {
+    "crypto": "crypto-browserify",
+    "stream": "stream-browserify",
+    "assert": "assert",
+    "http": "stream-http",
+    "https": "https-browserify",
+    "os": "os-browserify/browser",
+    "url": "url",
+    "buffer": "buffer",
+    "process": "process/browser",
+    "util": "util",
+    "vm": "vm-browserify"
+  },
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.26.5",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@craco/craco": "^7.1.0",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/typography": "^0.5.16",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "assert": "^2.1.0",
+    "autoprefixer": "^10.4.20",
+    "browser-resolve": "^2.0.0",
+    "browserify-zlib": "^0.2.0",
+    "buffer": "^6.0.3",
+    "buffer-browserify": "^0.2.5",
+    "crypto-browserify": "^3.12.1",
+    "cssnano": "^7.0.6",
+    "eslint": "^8.56.0",
+    "eslint-webpack-plugin": "^4.2.0",
+    "https-browserify": "^1.0.0",
+    "loader-utils": "^3.3.1",
+    "os-browserify": "^0.3.0",
+    "path-browserify": "^1.0.1",
+    "postcss": "^8.4.33",
+    "postcss-import": "^16.1.0",
+    "process": "^0.11.10",
+    "process-js": "^0.1.8",
+    "react-refresh": "^0.16.0",
+    "react-scripts": "^5.0.1",
+    "shell-quote": "^1.8.2",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
+    "tailwindcss": "^3.4.1",
+    "terser": "^5.37.0",
+    "typescript": "^4.9.5",
+    "url": "^0.11.4",
+    "webpack": "^5.97.1",
+    "webpack-dev-server": "^5.2.0"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  }
+}
