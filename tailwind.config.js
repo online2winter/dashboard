@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+mode: 'jit',
 content: [
     "./src/**/*.{js,jsx,ts,tsx}",
     "./public/index.html"
@@ -25,6 +26,9 @@ theme: {
         800: '#212529',
         900: '#1a1d20',
         },
+        gray: {
+        850: '#18191A',
+        },
     },
     fontFamily: {
         sans: ['Inter', 'sans-serif'],
@@ -33,16 +37,33 @@ theme: {
     animation: {
         'spin-slow': 'spin 3s linear infinite',
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'bounce-slow': 'bounce 3s infinite',
     },
     borderRadius: {
-        xl: '1rem',
+        'xl': '1rem',
         '2xl': '2rem',
+        '3xl': '3rem',
+    },
+    spacing: {
+        '18': '4.5rem',
+        '112': '28rem',
+        '128': '32rem',
+    },
+    maxWidth: {
+        '8xl': '88rem',
+        '9xl': '96rem',
     },
     },
 },
 plugins: [
-    require('@tailwindcss/forms'),
+    require('@tailwindcss/forms')({
+    strategy: 'class',
+    }),
     require('@tailwindcss/typography'),
     require('@tailwindcss/aspect-ratio'),
+    require('@tailwindcss/line-clamp'),
 ],
+future: {
+    hoverOnlyWhenSupported: true,
+},
 }
