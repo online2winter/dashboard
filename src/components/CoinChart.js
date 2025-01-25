@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import PropTypes from 'prop-types';
+import { LoadingSpinner } from './common';
 import {
 Chart as ChartJS,
 CategoryScale,
@@ -81,13 +83,6 @@ const [chartData, setChartData] = useState(null);
 const [isLoading, setIsLoading] = useState(true);
 const [error, setError] = useState(null);
 
-CoinChart.propTypes = {
-    tokenId: PropTypes.string.isRequired
-};
-
-CoinChart.defaultProps = {
-    tokenId: 'solana'
-};
 const chartRef = useRef(null);
 
 const updateChartData = useCallback(async () => {
@@ -104,6 +99,10 @@ const updateChartData = useCallback(async () => {
     }
 }, [tokenId, interval]);
 
+/**
+* Fetches initial price data and sets up WebSocket connection for live updates
+* @returns {Function} Cleanup function that closes WebSocket connection
+*/
 useEffect(() => {
     updateChartData();
     const cleanup = setupPriceWebSocket(tokenId, (newPrice) => {
@@ -121,14 +120,22 @@ useEffect(() => {
     });
 
     return () => cleanup();
-}, [tokenId, interval, updateChartData, chartData]);
+}, [tokenId, interval, updateChartData]); // Remove chartData dependency to prevent unnecessary re-renders
 
 if (error) {
-    return (
+return (
     <div className="w-full h-96 flex items-center justify-center bg-white rounded-lg shadow-lg">
-        <p className="text-red-500">{error}</p>
+    <div className="text-center">
+        <p className="text-red-500 font-medium mb-2">{error}</p>
+        <button
+        onClick={updateChartData}
+        className="text-blue-500 hover:text-blue-600 text-sm font-medium"
+        >
+        Try Again
+        </button>
     </div>
-    );
+    </div>
+);
 }
 
 return (
@@ -159,6 +166,23 @@ return (
     </div>
     </div>
 );
+};
+
+/**
+* PropTypes for CoinChart component
+* @type {Object}
+*/
+CoinChart.propTypes = {
+/** The ID of the token to display price data for */
+tokenId: PropTypes.string.isRequired
+};
+
+/**
+* Default props for CoinChart component
+* @type {Object}
+*/
+CoinChart.defaultProps = {
+tokenId: 'solana'
 };
 
 export default CoinChart;

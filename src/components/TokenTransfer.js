@@ -1,10 +1,11 @@
 import React, { useState, useContext } from 'react';
+import PropTypes from 'prop-types';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { PublicKey } from '@solana/web3.js';
-import { TokenContext } from '../context/TokenContext';
-import { LoadingSpinner } from './common/LoadingSpinner';
+import { TokenContext } from '../contexts/TokenContext';
+import { Button, Card, LoadingSpinner, ErrorFallback } from './common';
 import toast from 'react-hot-toast';
-const TokenTransfer = () => {
+const TokenTransfer = ({ className }) => {
 const { publicKey, signTransaction } = useWallet();
 const { tokenBalance, sendToken, estimateGas, isLoading: contextLoading } = useContext(TokenContext);
 const [recipient, setRecipient] = useState('');
@@ -12,6 +13,7 @@ const [amount, setAmount] = useState('');
 const [isLoading, setIsLoading] = useState(false);
 const [transactionStatus, setTransactionStatus] = useState('idle');
 const [gasEstimate, setGasEstimate] = useState(null);
+const [error, setError] = useState('');
 
 const validateAddress = (address) => {
     try {
@@ -76,7 +78,13 @@ const handleSubmit = async (e) => {
         setTransactionStatus('error');
     }
 } catch (err) {
-    toast.error(err.message);
+    toast.error(err.message, {
+    style: {
+        border: '1px solid #ef4444',
+        padding: '16px',
+        color: '#ef4444',
+    },
+    });
     setTransactionStatus('error');
 } finally {
     setIsLoading(false);
@@ -84,8 +92,8 @@ const handleSubmit = async (e) => {
 };
 
 return (
-    <div className="p-6 bg-white rounded-lg shadow-lg">
-    <h2 className="text-2xl font-bold mb-4">Transfer Tokens</h2>
+    <Card className={className}>
+        <h2 className="text-2xl font-bold mb-4">Transfer Tokens</h2>
     
     <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -128,28 +136,27 @@ return (
         <div className="text-red-600 text-sm">{error}</div>
         )}
 
-        <button
+        <Button
             type="submit"
+            variant="primary"
+            fullWidth
+            isLoading={isLoading}
             disabled={isLoading}
-            className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
-                isLoading
-                ? 'bg-indigo-400 cursor-not-allowed'
-                : 'bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-            }`}
+            loadingText="Processing..."
         >
-            {isLoading ? (
-                <div className="flex items-center space-x-2">
-                    <LoadingSpinner size="sm" />
-                    <span>Processing...</span>
-                </div>
-            ) : (
-                'Send Tokens'
-            )}
-        </button>
+            Send Tokens
+        </Button>
     </form>
-    </div>
+    </Card>
 );
 };
 
-export default TokenTransfer;
+TokenTransfer.propTypes = {
+    className: PropTypes.string,
+};
 
+TokenTransfer.defaultProps = {
+    className: '',
+};
+
+export default TokenTransfer;
