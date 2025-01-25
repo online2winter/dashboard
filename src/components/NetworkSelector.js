@@ -1,13 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { ExclamationCircleIcon } from '@heroicons/react/24/outline';
 import { NETWORKS } from '../config/networks';
-import { useTokenContext } from '../context/TokenContext';
-import LoadingSpinner from './common/LoadingSpinner';
+import { useTokenContext } from '../contexts/TokenContext';
+import { useWalletContext } from '../contexts/WalletContext';
+import { Button, Card, LoadingSpinner } from './common';
+import { ErrorBoundary } from './ErrorBoundary';
 
-const NetworkSelector = () => {
+/**
+* A component that allows users to select and switch between different blockchain networks
+* @component
+* @return {JSX.Element} The NetworkSelector component
+*/
+const NetworkSelector = ({ className }) => {
 const { currentNetwork, switchNetwork } = useTokenContext();
+const { connected } = useWalletContext();
 const [showConfirmation, setShowConfirmation] = useState(false);
 const [selectedNetwork, setSelectedNetwork] = useState(null);
 const [isLoading, setIsLoading] = useState(false);
@@ -34,9 +43,13 @@ if (selectedNetwork) {
 };
 
 return (
-    <div className="relative">
+<ErrorBoundary>
+    <div className={`relative ${className}`}>
     <Menu as="div" className="relative inline-block text-left">
-        <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+        <Menu.Button 
+        className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+        aria-label="Select network"
+        >
         {isLoading ? (
         <LoadingSpinner className="h-4 w-4" />
         ) : (
@@ -48,10 +61,19 @@ return (
         </Menu.Button>
 
         <Transition
-        enter="transition ease-out duration-100"
+            appear
+            show={Boolean(Menu.open)}
+            enter="transition ease-out duration-200"
+            enterFrom="transform opacity-0 scale-95"
+            enterTo="transform opacity-100 scale-100"
+            leave="transition ease-in duration-150"
+            leaveFrom="transform opacity-100 scale-100"
+            leaveTo="transform opacity-0 scale-95"
+        as={React.Fragment}
+        enter="transition ease-out duration-200"
         enterFrom="transform opacity-0 scale-95"
         enterTo="transform opacity-100 scale-100"
-        leave="transition ease-in duration-75"
+        leave="transition ease-in duration-150"
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
         >
@@ -62,11 +84,9 @@ return (
                 {({ active }) => (
                     <button
                     onClick={() => handleNetworkSelect(network)}
-                    className={`${
-                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
-                    } block px-4 py-2 text-sm w-full text-left ${
-                        currentNetwork.id === network.id ? 'font-bold' : ''
-                    }`}
+                    className={`block px-4 py-2 text-sm w-full text-left ${
+                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
+                    } ${currentNetwork.id === network.id ? 'font-bold' : ''}`}
                     >
                     {network.name}
                     </button>
@@ -79,38 +99,60 @@ return (
     </Menu>
 
     {showConfirmation && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-        <div className="bg-white p-6 rounded-lg shadow-xl">
-            <h3 className="text-lg font-medium mb-4">Confirm Network Switch</h3>
+        <div 
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center" 
+            role="dialog" 
+            aria-modal="true" 
+            aria-labelledby="network-switch-title"
+        >
+            <Card className="w-full max-w-md p-6">
+            <h3 id="network-switch-title" className="text-lg font-medium mb-4">Confirm Network Switch</h3>
             <p className="mb-4">
             Are you sure you want to switch to {selectedNetwork?.name}? Your wallet will need to reconnect.
             {error && (
-            <div className="mt-2 text-red-600 text-sm flex items-center">
-                <ExclamationCircleIcon className="h-5 w-5 mr-1" />
+                <div className="mt-2 text-red-600 text-sm flex items-center" role="alert">
+                <ExclamationCircleIcon className="h-5 w-5 mr-1" aria-hidden="true" />
                 {error}
-            </div>
+                </div>
             )}
             </p>
             <div className="flex justify-end gap-4">
-            <button
+            <Button
                 onClick={() => setShowConfirmation(false)}
-                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-md"
+                variant="secondary"
+                aria-label="Cancel network switch"
             >
                 Cancel
-            </button>
-            <button
+            </Button>
+            <Button
                 onClick={confirmNetworkSwitch}
-                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md"
+                variant="primary"
+                aria-label="Confirm network switch"
             >
                 Confirm
-            </button>
+            </Button>
             </div>
-        </div>
+        </Card>
         </div>
     )}
-    </div>
+</div>
+</ErrorBoundary>
 );
 };
 
-export default NetworkSelector;
+NetworkSelector.propTypes = {
+/** Optional className for styling */
+className: PropTypes.string,
+/** Optional ID for the component */
+id: PropTypes.string,
+/** Optional callback for network change events */
+onNetworkChange: PropTypes.func,
+};
 
+NetworkSelector.defaultProps = {
+className: '',
+id: undefined,
+onNetworkChange: undefined,
+};
+
+export default NetworkSelector;

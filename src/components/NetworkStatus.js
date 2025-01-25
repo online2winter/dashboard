@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Connection } from '@solana/web3.js';
+import { ExclamationCircleIcon } from '@heroicons/react/24/outline';
+import { Card } from './common';
 
+/**
+* Network connection status component that displays connection state and latency
+* @param {Object} props Component props
+* @param {string} props.endpoint The network endpoint URL
+*/
 const NetworkStatus = ({ endpoint }) => {
 const [status, setStatus] = useState('connecting');
 const [latency, setLatency] = useState(null);
@@ -44,28 +52,36 @@ useEffect(() => {
 }, [endpoint]);
 
 return (
-    <div className="network-status">
-    <div className={`status-indicator ${status}`}>
-        <span className="status-dot"></span>
-        <span className="status-text">{status}</span>
+<Card className="flex flex-col space-y-2">
+    <div className="flex items-center space-x-2">
+    <div
+        className={`h-2 w-2 rounded-full ${
+    status === 'connected' ? 'bg-green-500' :
+    status === 'connecting' ? 'bg-yellow-500' :
+    'bg-red-500'
+    }`} />
+    <span className="text-sm font-medium capitalize">{status}</span>
+</div>
+
+{latency && (
+    <div className="flex items-center space-x-2 text-sm text-gray-600">
+    <span className="font-medium">Latency:</span>
+    <span>{latency}ms</span>
     </div>
-    
-    {latency && (
-        <div className="latency-display">
-        <span className="latency-label">Latency:</span>
-        <span className="latency-value">{latency}ms</span>
-        </div>
-    )}
-    
-    {error && (
-        <div className="error-message">
-        <span className="error-icon">⚠️</span>
-        <span className="error-text">{error}</span>
-        </div>
-    )}
+)}
+
+{error && (
+    <div className="flex items-center space-x-2 text-sm text-red-600">
+    <ExclamationCircleIcon className="h-5 w-5" />
+    <span>{error}</span>
     </div>
+)}
+</div>
+</Card>
 );
+
+NetworkStatus.propTypes = {
+endpoint: PropTypes.string.isRequired,
 };
 
 export default NetworkStatus;
-
