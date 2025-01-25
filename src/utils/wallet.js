@@ -1,25 +1,44 @@
-import { web3 } from '@solana/web3.js';
+import { Connection, LAMPORTS_PER_SOL, PublicKey } from '@solana/web3.js';
 import { toast } from 'react-hot-toast';
 
+export class WalletError extends Error {
+constructor(message) {
+    super(message);
+    this.name = 'WalletError';
+}
+}
+
+/**
+* Connect to a wallet
+* @param {Object} wallet Wallet instance
+* @returns {Promise<boolean>} Connection success
+*/
 export const connectWallet = async (wallet) => {
 try {
     await wallet.connect();
     const publicKey = wallet.publicKey.toString();
-    toast.success(`Connected to wallet: ${publicKey.slice(0, 4)}...${publicKey.slice(-4)}`);
+    const truncatedKey = `${publicKey.slice(0, 4)}...${publicKey.slice(-4)}`;
+    toast.success(`Connected to wallet: ${truncatedKey}`);
     return true;
 } catch (error) {
     toast.error('Failed to connect wallet');
-    return false;
+    throw new WalletError('Failed to connect wallet');
 }
 };
 
+/**
+* Check wallet balance
+* @param {PublicKey} publicKey Wallet public key
+* @param {Connection} connection Solana connection instance
+* @returns {Promise<number>} Balance in SOL
+*/
 export const checkBalance = async (publicKey, connection) => {
 try {
     const balance = await connection.getBalance(publicKey);
-    return balance / web3.LAMPORTS_PER_SOL;
+    return balance / LAMPORTS_PER_SOL;
 } catch (error) {
     toast.error('Failed to fetch balance');
-    throw error;
+    throw new WalletError('Failed to fetch wallet balance');
 }
 };
 
