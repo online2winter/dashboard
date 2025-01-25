@@ -1,4 +1,137 @@
-# Getting Started with Create React App
+# Solana Dashboard
+
+A modern, responsive dashboard for monitoring and managing Solana tokens and transactions.
+
+## Features
+
+- Real-time token monitoring
+- Transaction history tracking
+- Network status monitoring
+- Wallet integration
+- Offline support with PWA
+- Mobile-responsive design
+
+## Quick Start
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm start
+
+# Run tests
+npm test
+
+# Build for production
+npm run build
+```
+
+## Prerequisites
+
+- Node.js >= 14
+- npm >= 6
+- A modern web browser
+- Solana wallet (e.g., Phantom)
+
+## Development Setup
+
+1. Clone the repository
+```bash
+git clone https://github.com/yourusername/solana-dashboard.git
+cd solana-dashboard
+```
+
+2. Install dependencies
+```bash
+npm install
+```
+
+3. Create environment file
+```bash
+cp .env.example .env
+```
+
+4. Start development server
+```bash
+npm start
+```
+
+## Testing
+
+```bash
+# Run all tests
+npm test
+
+# Run tests with coverage
+npm run test:coverage
+
+# Run specific test file
+npm test -- src/__tests__/components/TokenStats.test.js
+```
+
+## Deployment
+
+### Production Build
+
+```bash
+npm run build
+```
+
+### Docker Deployment
+
+```bash
+# Build image
+docker build -t solana-dashboard .
+
+# Run container
+docker run -p 3000:80 solana-dashboard
+```
+
+### Environment Variables
+
+| Variable | Description | Required |
+|----------|-------------|----------|
+| REACT_APP_RPC_ENDPOINT | Solana RPC endpoint | Yes |
+| REACT_APP_NETWORK | Solana network (mainnet/devnet) | Yes |
+| REACT_APP_SENTRY_DSN | Sentry DSN for error tracking | No |
+
+## Architecture
+
+The application follows a modern React architecture with:
+
+- React 18 with Hooks
+- Context for state management
+- Component-based architecture
+- Error boundaries for reliability
+- PWA support for offline functionality
+- TypeScript-like prop types
+- Unit and integration tests
+
+### Project Structure
+
+```
+src/
+├── components/      # Reusable components
+├── context/        # Context providers
+├── hooks/          # Custom hooks
+├── pages/          # Page components
+├── utils/          # Utility functions
+├── __tests__/      # Test files
+└── styles/         # CSS and style files
+```
+
+## Contributing
+
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+
+## Security
+
+Please read [SECURITY.md](SECURITY.md) for our security policy.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
