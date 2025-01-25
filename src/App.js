@@ -1,10 +1,6 @@
 import React, { useMemo } from 'react';
-import { ErrorBoundary } from './components/ErrorBoundary';
 import { Toaster } from 'react-hot-toast';
-
-// Components
-import MainLayout from './layouts/MainLayout';
-import Home from './pages/Home';
+import { clusterApiUrl } from '@solana/web3.js';
 
 // Solana Wallet
 import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
@@ -14,7 +10,11 @@ PhantomWalletAdapter,
 SolflareWalletAdapter,
 TorusWalletAdapter
 } from '@solana/wallet-adapter-wallets';
-import { clusterApiUrl } from '@solana/web3.js';
+
+// Components & Layout
+import { ErrorBoundary } from './components/ErrorBoundary';
+import MainLayout from './layouts/MainLayout';
+import Home from './pages/Home';
 
 // Context
 import { TokenContextProvider } from './contexts/TokenContext';

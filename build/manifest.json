@@ -1,25 +1,63 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
-  "icons": [
+"short_name": "Crypto Dashboard",
+"name": "Crypto Dashboard - Manage Your Portfolio",
+"description": "Track and manage your crypto assets with real-time updates, charts, and portfolio management tools.",
+"icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+    "src": "favicon.ico",
+    "sizes": "64x64 32x32 24x24 16x16",
+    "type": "image/x-icon",
+    "purpose": "any maskable"
     },
     {
-      "src": "logo192.png",
-      "type": "image/png",
-      "sizes": "192x192"
+    "src": "logo192.png",
+    "type": "image/png",
+    "sizes": "192x192",
+    "purpose": "any maskable"
     },
     {
-      "src": "logo512.png",
-      "type": "image/png",
-      "sizes": "512x512"
+    "src": "logo512.png",
+    "type": "image/png",
+    "sizes": "512x512",
+    "purpose": "any maskable"
+    },
+    {
+    "src": "logo1024.png",
+    "type": "image/png",
+    "sizes": "1024x1024",
+    "purpose": "any maskable"
     }
-  ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+],
+"start_url": ".",
+"scope": "/",
+"display": "standalone",
+"orientation": "portrait",
+"theme_color": "#1a73e8",
+"background_color": "#ffffff",
+"categories": ["finance", "cryptocurrency", "productivity"],
+"shortcuts": [
+    {
+    "name": "View Portfolio",
+    "short_name": "Portfolio",
+    "description": "View your crypto portfolio",
+    "url": "/portfolio",
+    "icons": [{ "src": "icons/portfolio.png", "sizes": "192x192" }]
+    },
+    {
+    "name": "Transaction History",
+    "short_name": "History",
+    "description": "View your transaction history",
+    "url": "/history",
+    "icons": [{ "src": "icons/history.png", "sizes": "192x192" }]
+    }
+],
+"screenshots": [
+    {
+    "src": "screenshots/dashboard.png",
+    "sizes": "1280x720",
+    "type": "image/png",
+    "platform": "wide",
+    "label": "Dashboard View"
+    }
+]
 }
