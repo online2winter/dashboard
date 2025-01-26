@@ -5,10 +5,12 @@ import { EthereumWalletProvider as WalletProvider, useEthereumWallet as useWalle
 // Mock window.ethereum
 const mockEthereum = {
 request: jest.fn(),
-addListener: jest.fn(),
+on: jest.fn(),
 removeListener: jest.fn(),
 isMetaMask: true,
 isConnected: jest.fn(),
+selectedAddress: null,
+chainId: '0x1',
 _eventHandlers: {},
 _state: {
     accounts: [],
@@ -128,7 +130,15 @@ it('initializes with default values', () => {
 });
 
 it('handles wallet connection successfully', async () => {
-// Default behavior set in beforeEach will handle the connection flow
+mockEthereum.request.mockImplementation(async ({ method }) => {
+    if (method === 'eth_requestAccounts') {
+    mockEthereum._state.accounts = ['0x123...'];
+    mockEthereum._state.isConnected = true;
+    mockEthereum.selectedAddress = '0x123...';
+    return ['0x123...'];
+    }
+    return null;
+});
 
 render(
     <WalletProvider>
@@ -219,14 +229,18 @@ expect(mockEthereum.request).toHaveBeenCalledWith({
     
 
 it('cleans up event listeners on unmount', () => {
-    const { unmount } = render(
-        <WalletProvider>
-            <TestComponent />
-        </WalletProvider>
-    );
+const { unmount } = render(
+    <WalletProvider>
+    <TestComponent />
+    </WalletProvider>
+);
 
-    unmount();
+unmount();
 
-    expect(mockEthereum.removeListener).toHaveBeenCalled();
-    });
+// Verify cleanup of specific event listeners
+expect(mockEthereum.removeListener).toHaveBeenCalledWith('accountsChanged', expect.any(Function));
+expect(mockEthereum.removeListener).toHaveBeenCalledWith('chainChanged', expect.any(Function));
+expect(mockEthereum.removeListener).toHaveBeenCalledWith('connect', expect.any(Function));
+expect(mockEthereum.removeListener).toHaveBeenCalledWith('disconnect', expect.any(Function));
+});
     });

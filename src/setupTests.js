@@ -43,3 +43,10 @@ value: jest.fn().mockImplementation(query => ({
     dispatchEvent: jest.fn(),
 })),
 });
+
+// Mock window.ResizeObserver
+global.ResizeObserver = jest.fn().mockImplementation(() => ({
+observe: jest.fn(),
+unobserve: jest.fn(),
+disconnect: jest.fn(),
+}));

@@ -30,11 +30,26 @@ describe('Default Values', () => {
 });
 
 describe('Hook Usage', () => {
-    it('throws error when used outside provider', () => {
+it('throws error when used outside provider', () => {
+    const originalError = console.error;
+    console.error = jest.fn();
+    
     expect(() => {
-        renderHook(() => useTokenContext());
+    renderHook(() => useTokenContext());
     }).toThrow('useTokenContext must be used within a TokenContextProvider');
+    
+    console.error = originalError;
+});
+
+it('provides context when used within provider', () => {
+    const { result } = renderHook(() => useTokenContext(), {
+    wrapper: TokenContextProvider
     });
+    
+    expect(result.current).toBeDefined();
+    expect(result.current.token).toBeNull();
+    expect(typeof result.current.setToken).toBe('function');
+});
 });
 
 describe('Token Management', () => {
@@ -110,7 +125,27 @@ describe('Loading State', () => {
 });
 
 describe('Error Handling', () => {
-    it('clears error when operation succeeds', async () => {
+beforeEach(() => {
+    jest.useFakeTimers();
+});
+
+afterEach(() => {
+    jest.useRealTimers();
+});
+
+it('sets error boundary state on error', async () => {
+    const { result } = renderHook(() => useTokenContext(), {
+    wrapper: TokenContextProvider
+    });
+    
+    await act(async () => {
+    result.current.setToken(undefined);
+    });
+    
+    expect(result.current.error).toBe('Invalid token value');
+});
+
+it('clears error when operation succeeds', async () => {
         const { result } = renderHook(() => useTokenContext(), {
             wrapper: TokenContextProvider,
         });
