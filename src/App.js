@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { clusterApiUrl } from '@solana/web3.js';
 
@@ -38,12 +39,13 @@ new TorusWalletAdapter()
 ], []);
 
 return (
-<ErrorBoundary>
+<BrowserRouter>
+    <ErrorBoundary>
     <ConnectionProvider endpoint={endpoint}>
     <WalletProvider wallets={wallets} autoConnect>
         <WalletModalProvider>
         <TokenContextProvider>
-            <div className="min-h-screen bg-gray-100">
+            <div className="min-h-screen bg-gray-100" data-testid="app-container">
             <Toaster
                 position="top-right"
                 toastOptions={{
@@ -55,7 +57,7 @@ return (
                 },
                 }}
             />
-            <MainLayout>
+            <MainLayout data-testid="navigation">
                 <Home />
             </MainLayout>
             </div>
@@ -64,6 +66,7 @@ return (
     </WalletProvider>
     </ConnectionProvider>
 </ErrorBoundary>
+</BrowserRouter>
 );
 }
 

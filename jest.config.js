@@ -23,6 +23,6 @@ transform: {
     '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { presets: ['babel-preset-react-app'] }]
 },
 transformIgnorePatterns: [
-    '/node_modules/(?!@solana|@project-serum|@coral-xyz|@metaplex-foundation|@noble).+\\.js$'
+    '/node_modules/(?!@solana|@project-serum|@coral-xyz|@metaplex-foundation|@noble|react-router-dom).+\\.js$'
 ]
 };

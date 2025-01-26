@@ -54,34 +54,35 @@ useEffect(() => {
 return (
 <Card className="flex flex-col space-y-2">
     <div className="flex items-center space-x-2">
-    <div
-        className={`h-2 w-2 rounded-full ${
-    status === 'connected' ? 'bg-green-500' :
-    status === 'connecting' ? 'bg-yellow-500' :
-    'bg-red-500'
-    }`} />
-    <span className="text-sm font-medium capitalize">{status}</span>
-</div>
-
-{latency && (
-    <div className="flex items-center space-x-2 text-sm text-gray-600">
-    <span className="font-medium">Latency:</span>
-    <span>{latency}ms</span>
+        <div
+            className={`h-2 w-2 rounded-full ${
+                status === 'connected' ? 'bg-green-500' :
+                status === 'connecting' ? 'bg-yellow-500' :
+                'bg-red-500'
+            }`}
+        />
+        <span className="text-sm font-medium capitalize">{status}</span>
     </div>
-)}
 
-{error && (
-    <div className="flex items-center space-x-2 text-sm text-red-600">
-    <ExclamationCircleIcon className="h-5 w-5" />
-    <span>{error}</span>
-    </div>
-)}
-</div>
+    {latency && (
+        <div className="flex items-center space-x-2 text-sm text-gray-600">
+            <span className="font-medium">Latency:</span>
+            <span>{latency}ms</span>
+        </div>
+    )}
+
+    {error && (
+        <div className="flex items-center space-x-2 text-sm text-red-600">
+            <ExclamationCircleIcon className="h-5 w-5" />
+            <span>{error}</span>
+        </div>
+    )}
 </Card>
 );
+};
 
 NetworkStatus.propTypes = {
-endpoint: PropTypes.string.isRequired,
+    endpoint: PropTypes.string.isRequired,
 };
 
 export default NetworkStatus;

@@ -12,6 +12,10 @@ import { ErrorBoundary } from './ErrorBoundary';
 /**
 * A component that allows users to select and switch between different blockchain networks
 * @component
+* @param {Object} props - Component props
+* @param {string} [props.className] - Optional class name for styling
+* @param {string} [props.id] - Optional ID for the component
+* @param {Function} [props.onNetworkChange] - Optional callback for network change events
 * @return {JSX.Element} The NetworkSelector component
 */
 const NetworkSelector = ({ className }) => {

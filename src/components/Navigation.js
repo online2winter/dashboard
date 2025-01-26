@@ -7,9 +7,9 @@ import { Menu } from '@heroicons/react/24/outline';
 import { useTokenContext } from '../contexts/TokenContext';
 
 // Component imports
-import { WalletButton } from './WalletButton';
-import { NetworkSelector } from './NetworkSelector';
-import { NetworkStatus } from './NetworkStatus';
+import WalletButton from './WalletButton';
+import NetworkSelector from './NetworkSelector';
+import NetworkStatus from './NetworkStatus';
 import { LoadingSpinner, Button, Card } from './common';
 import { ErrorBoundary } from './ErrorBoundary';
 
@@ -106,4 +106,4 @@ return (
 );
 };
 
-export { Navigation };
+export default Navigation;
